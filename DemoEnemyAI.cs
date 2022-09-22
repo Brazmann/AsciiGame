@@ -35,7 +35,6 @@ namespace AsciiGame
 
         public void TakeDamage(string attackerName, int amount)
         {
-            //a
             var stats = Parent.GoRogueComponents.GetFirstOrDefault<EnemyStats>();
             stats.Health -= amount;
             Debug.WriteLine(stats.Health);

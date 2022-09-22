@@ -28,6 +28,10 @@ namespace AsciiGame
     internal static class MapObjectFactory
     {
         public static string gamePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public static Dictionary<string, Color> Colors = new Dictionary<string, Color>()
+        {
+            {"bruh", Color.Green }
+        };
         public static MemoryAwareRogueLikeCell Grass(Point position)
         {
             var rnd = new Random();
@@ -38,19 +42,19 @@ namespace AsciiGame
                 case 1:
                 case 2:
                 case 3:
-                    return new(position, Color.Green, Color.DarkGreen, ',', (int)MyGameMap.Layer.Terrain);
+                    return new(position, Color.Green, Color.TransparentBlack, ',', (int)MyGameMap.Layer.Terrain);
                 case 4:
                 case 5:
                 case 6:
                 case 7:
-                    return new(position, Color.Green, Color.DarkGreen, '.', (int)MyGameMap.Layer.Terrain);
+                    return new(position, Color.Green, Color.TransparentBlack, '.', (int)MyGameMap.Layer.Terrain);
                 case 8:
                 case 9:
                 case 10:
                 case 11:
-                    return new(position, Color.Green, Color.DarkGreen, 39, (int)MyGameMap.Layer.Terrain);
+                    return new(position, Color.Green, Color.TransparentBlack, 39, (int)MyGameMap.Layer.Terrain);
                 case 12:
-                    return new(position, Color.AnsiGreen, Color.DarkGreen, 'T', (int)MyGameMap.Layer.Terrain, false, false);
+                    return new(position, Color.AnsiGreen, Color.TransparentBlack, 'T', (int)MyGameMap.Layer.Terrain, false, false);
                 default:
                     return new(position, Color.HotPink, Color.AnsiBlack, '#', (int)MyGameMap.Layer.Terrain);
             }
@@ -83,21 +87,24 @@ namespace AsciiGame
             return player;
         }
 
+        public static string monsterJson = File.ReadAllText(@$"{gamePath}\data\json\Monsters\Monsters.json");
         public static RogueLikeEntity Enemy()
         {
-            string json = File.ReadAllText(@$"{gamePath}\data\json\Monsters\Monsters.json");
-            var monsters = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(json).ToList();
+            var monsters = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(monsterJson).ToList(); 
             var rnd = new Random();
             var roll = rnd.Next(0, monsters.Count);
 
             var ID = monsters[roll].Key;
             var Name = monsters[roll].Value.Name;
             var Character = monsters[roll].Value.Character;
+            var MonsterColor = monsters[roll].Value.Color;
             var Health = monsters[roll].Value.Health;
             var ArmorClass = monsters[roll].Value.ArmorClass;
             var Description = monsters[roll].Value.Description;
 
-            var enemy = new RogueLikeEntity(Color.Red, Character, false, layer: (int)MyGameMap.Layer.Monsters);
+            var ParsedColor = ColorExtensions2.FromName(MonsterColor);
+
+            var enemy = new RogueLikeEntity(ParsedColor, Character, false, layer: (int)MyGameMap.Layer.Monsters);
             enemy.AllComponents.Add(new EnemyStats());
             var stats = enemy.GoRogueComponents.GetFirstOrDefault<EnemyStats>();
 
@@ -120,6 +127,7 @@ namespace AsciiGame
     {
         public string Name { get; set; }
         public char Character { get; set; }
+        public string Color { get; set; }
         public int Health { get; set; }
         public int ArmorClass { get; set; }
         public string Description { get; set; }
