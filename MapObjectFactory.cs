@@ -27,16 +27,27 @@ namespace AsciiGame
         {
             var rnd = new Random();
 
-            switch (rnd.Next(0, 3))
+            switch (rnd.Next(0, 13))
             {
                 case 0:
-                    return new(position, Color.Green, Color.SaddleBrown, ',', (int)MyGameMap.Layer.Terrain);
                 case 1:
-                    return new(position, Color.Green, Color.SaddleBrown, '.', (int)MyGameMap.Layer.Terrain);
                 case 2:
-                    return new(position, Color.Green, Color.SaddleBrown, 39, (int)MyGameMap.Layer.Terrain);
+                case 3:
+                    return new(position, Color.Green, Color.DarkGreen, ',', (int)MyGameMap.Layer.Terrain);
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    return new(position, Color.Green, Color.DarkGreen, '.', (int)MyGameMap.Layer.Terrain);
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                    return new(position, Color.Green, Color.DarkGreen, 39, (int)MyGameMap.Layer.Terrain);
+                case 12:
+                    return new(position, Color.AnsiGreen, Color.DarkGreen, 'T', (int)MyGameMap.Layer.Terrain, false, false);
                 default:
-                    return new(position, Color.Pink, Color.AnsiBlackBright, '#', (int)MyGameMap.Layer.Terrain);
+                    return new(position, Color.HotPink, Color.AnsiBlack, '#', (int)MyGameMap.Layer.Terrain);
             }
 
             /*if(rnd.Next(0, 2) == 1){

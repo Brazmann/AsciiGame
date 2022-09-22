@@ -32,7 +32,7 @@ namespace AsciiGame
             var generator = new Generator(width, height)
                 .ConfigAndGenerateSafe(gen =>
                 {
-                    gen.AddSteps(DefaultAlgorithms.BasicRandomRoomsMapSteps());
+                    //gen.AddSteps(DefaultAlgorithms.BasicRandomRoomsMapSteps(null, 2, 4, 10, 20));
                     gen.AddSteps(DefaultAlgorithms.RectangleMapSteps());
                 });
 
@@ -55,7 +55,7 @@ namespace AsciiGame
             map.ApplyTerrainOverlay(generatedMap, (pos, val) => val ? MapObjectFactory.Grass(pos) : MapObjectFactory.Wall(pos));
 
             // Generate 10 enemies, placing them in random walkable locations for demo purposes.
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var enemy = MapObjectFactory.Enemy();
                 enemy.Position = GlobalRandom.DefaultRNG.RandomPosition(map.WalkabilityView, true);
