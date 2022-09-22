@@ -1,0 +1,23 @@
+{
+  "MON_GOBLIN": {
+    "Name": "Goblin",
+    "Character": "g",
+    "Health": "100",
+    "ArmorClass": "10",
+    "Description": "It's little, and green, and ferocious.'"
+  },
+  "MON_ZOMBIE": {
+    "Name": "Zombie",
+    "Character": "Z",
+    "Health": "80",
+    "ArmorClass": "8",
+    "Description": "What once drew breath now draws blood. It seems eager to tear the life from you."
+  },
+  "DBG_DEBUGGODMONSTER": {
+    "Name": "Debug God Monster",
+    "Character": "D",
+    "Health": "8000",
+    "ArmorClass": "800",
+    "Description": "What the fuck."
+  }
+}

@@ -2,8 +2,6 @@
 using SadRogue.Integration;
 using SadRogue.Integration.Keybindings;
 using SadRogue.Primitives;
-using System;
-using System.Diagnostics;
 
 namespace AsciiGame
 {
@@ -21,13 +19,16 @@ namespace AsciiGame
         {
             if (!Parent!.CanMoveIn(direction))
             {
+                int PlayerDamage = 20;
                 var entity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
                 if (entity == null) return;
-                if (entity.Layer == 1)
+                if (entity.Layer == 1) //Check target tile is monster
                 {
-                    Parent.CurrentMap.RemoveEntity(entity);
-                    Program.GameScreen.MessageLog.AddMessage($"Player fucking killed {entity.Name}!");
-                } else
+                    var ai = entity.GoRogueComponents.GetFirstOrDefault<DemoEnemyAI>();
+                    ai.TakeDamage("Player", PlayerDamage);
+                    return;
+                }
+                else
                 {
                     return;
                 }
@@ -44,9 +45,9 @@ namespace AsciiGame
         }
         public void PrintNearbyEntities()
         {
-                RogueLikeEntity checkEntity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(Parent.Position.X + 1, Parent.Position.Y);
-                if(checkEntity == null) return;
-                Program.GameScreen.MessageLog.AddMessage(checkEntity.Name);
+            RogueLikeEntity checkEntity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(Parent.Position.X + 1, Parent.Position.Y);
+            if (checkEntity == null) return;
+            //Program.GameScreen.MessageLog.AddMessage(checkEntity.Name);
         }
     }
 }
