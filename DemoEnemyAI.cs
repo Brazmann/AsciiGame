@@ -26,7 +26,7 @@ namespace AsciiGame
             var firstPoint = path.GetStep(0);
             if (Parent.CanMove(firstPoint))
             {
-                Program.GameScreen.MessageLog.AddMessage($"An enemy moves {Direction.GetDirection(Parent.Position, firstPoint)}!");
+                Program.GameScreen.MessageLog.AddMessage($"A {Parent.Name} moves {Direction.GetDirection(Parent.Position, firstPoint)}!");
                 Parent.Position = firstPoint;
             }
 

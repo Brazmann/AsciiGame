@@ -13,8 +13,9 @@ namespace AsciiGame
         public readonly MyGameMap Map;
         public readonly RogueLikeEntity Player;
         public readonly MessageLogConsole MessageLog;
-        public readonly DebugLogConsole DebugLog;
+        public readonly GameInfoConsole GameInfo;
         public readonly Console BorderConsole;
+       // public readonly Console TurnDisplay;
 
         public readonly ScreenSurface Border;
 
@@ -59,11 +60,16 @@ namespace AsciiGame
             MessageLog.Parent = this;
             MessageLog.Position = new(0, Program.Height - MessageLogHeight);
 
+            // Create turn display
+            /*TurnDisplay = new TurnDisplayConsole(Program.Width / 2, MessageLogHeight);
+            TurnDisplay.Parent = this;
+            TurnDisplay.Position = new(MessageLog.Width + 1, Program.Height - MessageLogHeight);*/
+
             // Create debug log
-            DebugLog = new DebugLogConsole(Program.Width / 2, MessageLogHeight);
-            DebugLog.Parent = this;
-            DebugLog.Position = new(MessageLog.Width + 1, Program.Height - MessageLogHeight);
-            DebugLog.IsVisible = debug;
+            GameInfo = new GameInfoConsole(Program.Width / 2, MessageLogHeight);
+            GameInfo.Parent = this;
+            GameInfo.Position = new(MessageLog.Width + 1, Program.Height - MessageLogHeight);
+            GameInfo.IsVisible = debug;
 
             // Create border between map and UI
             BorderConsole = new Console(Map.Width, Map.Height);

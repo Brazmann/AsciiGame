@@ -2,6 +2,7 @@
 using SadRogue.Integration.FieldOfView.Memory;
 using SadRogue.Integration.Keybindings;
 using SadRogue.Primitives;
+using System;
 
 namespace AsciiGame
 {
@@ -22,8 +23,29 @@ namespace AsciiGame
     /// </remarks>
     internal static class MapObjectFactory
     {
-        public static MemoryAwareRogueLikeCell Floor(Point position)
-            => new(position, Color.White, Color.Black, '.', (int)MyGameMap.Layer.Terrain);
+        public static MemoryAwareRogueLikeCell Grass(Point position)
+        {
+            var rnd = new Random();
+
+            switch (rnd.Next(0, 3))
+            {
+                case 0:
+                    return new(position, Color.Green, Color.SaddleBrown, ',', (int)MyGameMap.Layer.Terrain);
+                case 1:
+                    return new(position, Color.Green, Color.SaddleBrown, '.', (int)MyGameMap.Layer.Terrain);
+                case 2:
+                    return new(position, Color.Green, Color.SaddleBrown, 39, (int)MyGameMap.Layer.Terrain);
+                default:
+                    return new(position, Color.Pink, Color.AnsiBlackBright, '#', (int)MyGameMap.Layer.Terrain);
+            }
+
+            /*if(rnd.Next(0, 2) == 1){
+                return new(position, Color.Green, Color.Black, '.', (int)MyGameMap.Layer.Terrain);
+            } else
+            {
+                return new(position, Color.White, Color.Black, '.', (int)MyGameMap.Layer.Terrain);
+            }*/
+        }
 
         public static MemoryAwareRogueLikeCell Wall(Point position)
             => new(position, Color.White, Color.Black, '#', (int)MyGameMap.Layer.Terrain, false, false);

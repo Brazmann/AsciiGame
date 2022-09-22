@@ -19,9 +19,21 @@ namespace AsciiGame
     {
         protected override void MotionHandler(Direction direction)
         {
-            if (!Parent!.CanMoveIn(direction)) return;
+            if (!Parent!.CanMoveIn(direction))
+            {
+                var entity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
+                if (entity == null) return;
+                if (entity.Layer == 1)
+                {
+                    Parent.CurrentMap.RemoveEntity(entity);
+                    Program.GameScreen.MessageLog.AddMessage($"Player fucking killed {entity.Name}!");
+                } else
+                {
+                    return;
+                }
+            }
             PrintNearbyEntities();
-
+            Program.GameScreen.GameInfo.IncrementTurn();
             Parent.Position += direction;
 
             foreach (var entity in Parent.CurrentMap!.Entities.Items)
@@ -35,8 +47,6 @@ namespace AsciiGame
                 RogueLikeEntity checkEntity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(Parent.Position.X + 1, Parent.Position.Y);
                 if(checkEntity == null) return;
                 Program.GameScreen.MessageLog.AddMessage(checkEntity.Name);
-                Program.GameScreen.DebugLog.AddMessage("Debug");
-                Debug.WriteLine(checkEntity.Name);
         }
     }
 }

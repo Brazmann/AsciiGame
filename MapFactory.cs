@@ -33,7 +33,7 @@ namespace AsciiGame
                 .ConfigAndGenerateSafe(gen =>
                 {
                     gen.AddSteps(DefaultAlgorithms.BasicRandomRoomsMapSteps());
-                    //gen.AddSteps(DefaultAlgorithms.RectangleMapSteps());
+                    gen.AddSteps(DefaultAlgorithms.RectangleMapSteps());
                 });
 
             var generatedMap = generator.Context.GetFirst<ISettableGridView<bool>>("WallFloor");
@@ -52,7 +52,7 @@ namespace AsciiGame
             // Translate GoRogue's terrain data into actual integration library objects.  Our terrain must be of type
             // MemoryAwareRogueLikeCells because we are using the integration library's "memory-based" fov visibility
             // system.
-            map.ApplyTerrainOverlay(generatedMap, (pos, val) => val ? MapObjectFactory.Floor(pos) : MapObjectFactory.Wall(pos));
+            map.ApplyTerrainOverlay(generatedMap, (pos, val) => val ? MapObjectFactory.Grass(pos) : MapObjectFactory.Wall(pos));
 
             // Generate 10 enemies, placing them in random walkable locations for demo purposes.
             for (int i = 0; i < 10; i++)
@@ -60,6 +60,7 @@ namespace AsciiGame
                 var enemy = MapObjectFactory.Enemy();
                 enemy.Position = GlobalRandom.DefaultRNG.RandomPosition(map.WalkabilityView, true);
                 map.AddEntity(enemy);
+                
             }
 
             return map;
