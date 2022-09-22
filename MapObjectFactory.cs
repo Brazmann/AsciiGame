@@ -2,7 +2,11 @@
 using SadRogue.Integration.FieldOfView.Memory;
 using SadRogue.Integration.Keybindings;
 using SadRogue.Primitives;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
 
 namespace AsciiGame
 {
@@ -23,6 +27,7 @@ namespace AsciiGame
     /// </remarks>
     internal static class MapObjectFactory
     {
+        public static string gamePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         public static MemoryAwareRogueLikeCell Grass(Point position)
         {
             var rnd = new Random();
@@ -80,13 +85,47 @@ namespace AsciiGame
 
         public static RogueLikeEntity Enemy()
         {
-            var enemy = new RogueLikeEntity(Color.Red, 'g', false, layer: (int)MyGameMap.Layer.Monsters);
-            enemy.Name = "Goblin";
+            string json = File.ReadAllText(@$"{gamePath}\data\json\Monsters\Monsters.json");
+            var monsters = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(json).ToList();
+            var rnd = new Random();
+            var roll = rnd.Next(0, monsters.Count);
+
+            var ID = monsters[roll].Key;
+            var Name = monsters[roll].Value.Name;
+            var Character = monsters[roll].Value.Character;
+            var Health = monsters[roll].Value.Health;
+            var ArmorClass = monsters[roll].Value.ArmorClass;
+            var Description = monsters[roll].Value.Description;
+
+            var enemy = new RogueLikeEntity(Color.Red, Character, false, layer: (int)MyGameMap.Layer.Monsters);
+            enemy.AllComponents.Add(new EnemyStats());
+            var stats = enemy.GoRogueComponents.GetFirstOrDefault<EnemyStats>();
+
+            enemy.Name = ID;
+            stats.Name = Name;
+            stats.Character = Character;
+            stats.Health = Health;
+            stats.ArmorClass = ArmorClass;
+            stats.Description = Description;
+
+            
             // Add AI component to path toward player when in view
             enemy.AllComponents.Add(new DemoEnemyAI());
 
             return enemy;
         }
+    }
 
+    public class Monster
+    {
+        public string Name { get; set; }
+        public char Character { get; set; }
+        public int Health { get; set; }
+        public int ArmorClass { get; set; }
+        public string Description { get; set; }
+    }
+    public class Monsters
+    {
+        public List<Monster> monster { get; set; }
     }
 }
