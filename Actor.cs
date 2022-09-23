@@ -30,7 +30,7 @@ class Actor : RogueLikeEntity
 
     private void OnMoved(object? s, GameObjectPropertyChanged<Point> e)
     {
-        Debug.WriteLine("Hey kid get outta here!");
+        //Debug.WriteLine("Hey kid get outta here!");
         //if (CurrentMap != null)
             //FOV.Calculate(Position, FOVRadius, CurrentMap.DistanceMeasurement);
     }

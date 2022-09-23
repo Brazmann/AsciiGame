@@ -55,7 +55,8 @@ namespace AsciiGame
                 case 11:
                     return new(position, Color.Green, Color.TransparentBlack, 39, (int)MyGameMap.Layer.Terrain);
                 case 12:
-                    return new(position, Color.AnsiGreen, Color.TransparentBlack, 'T', (int)MyGameMap.Layer.Terrain, false, false);
+                    //return new(position, Color.AnsiGreen, Color.TransparentBlack, 'T', (int)MyGameMap.Layer.Terrain, false, false);
+                    return new(position, Color.Green, Color.TransparentBlack, '.', (int)MyGameMap.Layer.Terrain);
                 default:
                     return new(position, Color.HotPink, Color.AnsiBlack, '#', (int)MyGameMap.Layer.Terrain);
             }
@@ -106,7 +107,7 @@ namespace AsciiGame
 
             var ParsedColor = ColorExtensions2.FromName(MonsterColor);
 
-            var enemy = new Actor(ParsedColor, Character, false, false, layer: (int)MyGameMap.Layer.Monsters, 4);
+            var enemy = new Actor(ParsedColor, Character, false, true, layer: (int)MyGameMap.Layer.Monsters, 10);
             enemy.AllComponents.Add(new ActorStats());
             var stats = enemy.GoRogueComponents.GetFirstOrDefault<ActorStats>();
             
