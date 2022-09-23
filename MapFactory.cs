@@ -32,7 +32,7 @@ namespace AsciiGame
             var generator = new Generator(width, height)
                 .ConfigAndGenerateSafe(gen =>
                 {
-                    gen.AddSteps(DefaultAlgorithms.BasicRandomRoomsMapSteps(null, 2, 4, 10, 20));
+                    //gen.AddSteps(DefaultAlgorithms.BasicRandomRoomsMapSteps(null, 2, 4, 10, 20));
                     gen.AddSteps(DefaultAlgorithms.RectangleMapSteps());
                 });
 

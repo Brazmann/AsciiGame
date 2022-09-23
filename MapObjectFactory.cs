@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using GoRogue.FOV;
 
 namespace AsciiGame
 {
@@ -74,7 +75,7 @@ namespace AsciiGame
         {
             // Create entity with appropriate attributes
             var player = new RogueLikeEntity('@', false, layer: (int)MyGameMap.Layer.Monsters);
-
+            player.Name = "Player";
             // Add component for controlling player movement via keyboard.  Other (non-movement) keybindings can be
             // added as well
             var motionControl = new CustomPlayerKeybindingsComponent();
@@ -90,6 +91,7 @@ namespace AsciiGame
         public static string monsterJson = File.ReadAllText(@$"{gamePath}\data\json\Monsters\Monsters.json");
         public static RogueLikeEntity Enemy()
         {
+
             var monsters = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(monsterJson).ToList(); 
             var rnd = new Random();
             var roll = rnd.Next(0, monsters.Count);
@@ -104,10 +106,10 @@ namespace AsciiGame
 
             var ParsedColor = ColorExtensions2.FromName(MonsterColor);
 
-            var enemy = new RogueLikeEntity(ParsedColor, Character, false, layer: (int)MyGameMap.Layer.Monsters);
-            enemy.AllComponents.Add(new EnemyStats());
-            var stats = enemy.GoRogueComponents.GetFirstOrDefault<EnemyStats>();
-
+            var enemy = new Actor(ParsedColor, Character, false, false, layer: (int)MyGameMap.Layer.Monsters, 4);
+            enemy.AllComponents.Add(new ActorStats());
+            var stats = enemy.GoRogueComponents.GetFirstOrDefault<ActorStats>();
+            
             enemy.Name = ID;
             stats.Name = Name;
             stats.Character = Character;
@@ -118,7 +120,8 @@ namespace AsciiGame
             
             // Add AI component to path toward player when in view
             enemy.AllComponents.Add(new DemoEnemyAI());
-
+            
+              
             return enemy;
         }
     }

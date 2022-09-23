@@ -20,11 +20,11 @@ namespace AsciiGame
             if (!Parent!.CanMoveIn(direction))
             {
                 int PlayerDamage = 20;
-                var entity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
-                if (entity == null) return;
-                if (entity.Layer == 1) //Check target tile is monster
+                var actor = Parent.CurrentMap.GetEntityAt<Actor>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
+                if (actor == null) return;
+                if (actor.Layer == 1) //Check target tile is monster
                 {
-                    var ai = entity.GoRogueComponents.GetFirstOrDefault<DemoEnemyAI>();
+                    var ai = actor.GoRogueComponents.GetFirstOrDefault<DemoEnemyAI>();
                     ai.TakeDamage("Player", PlayerDamage);
                     return;
                 }
@@ -45,7 +45,7 @@ namespace AsciiGame
         }
         public void PrintNearbyEntities()
         {
-            RogueLikeEntity checkEntity = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(Parent.Position.X + 1, Parent.Position.Y);
+            Actor checkEntity = Parent.CurrentMap.GetEntityAt<Actor>(Parent.Position.X + 1, Parent.Position.Y);
             if (checkEntity == null) return;
             //Program.GameScreen.MessageLog.AddMessage(checkEntity.Name);
         }

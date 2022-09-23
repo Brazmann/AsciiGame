@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using GoRogue.Components.ParentAware;
+using GoRogue.FOV;
 using GoRogue.GameFramework;
 using SadRogue.Integration;
 using SadRogue.Integration.Components;
@@ -12,14 +13,15 @@ namespace AsciiGame
     /// object is moved.  This could be also be achieved via a subclass of RogueLikeEntity; however the integration library
     /// makes it quick and easy to create custom components that function in both SadConsole's and GoRogue's component systems.
     /// </summary>
-    internal class PlayerFOVController : RogueLikeComponentBase<RogueLikeEntity>
+    internal class EnemyFOVController : RogueLikeComponentBase<RogueLikeEntity>
     {
         /// <summary>
         /// The sight radius of the player.
         /// </summary>
-        public int FOVRadius { get; init; } = 40;
+        public int FOVRadius { get; init; } = 8;
+        
 
-        public PlayerFOVController()
+        public EnemyFOVController()
             : base(false, false, false, false)
         {
             // When the component is attached/detached from an object, set/reset hooks so that FOV is recalculated when

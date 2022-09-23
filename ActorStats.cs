@@ -10,14 +10,14 @@ namespace AsciiGame
     /// Simple component that moves its parent toward the player if the player is visible. It demonstrates the basic
     /// usage of the integration library's component system, as well as basic AStar pathfinding.
     /// </summary>
-    internal class EnemyStats : RogueLikeComponentBase<RogueLikeEntity>
+    internal class ActorStats : RogueLikeComponentBase<RogueLikeEntity>
     {
         public string Name { get; set; }
         public char Character { get; set; }
         public int Health { get; set; }
         public int ArmorClass { get; set; }
         public string Description { get; set; }
-        public EnemyStats()
+        public ActorStats()
             : base(false, false, false, false)
         { }
 

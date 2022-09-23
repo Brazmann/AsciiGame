@@ -20,8 +20,8 @@ namespace AsciiGame
         public const int Height = 50;
 
         // Map width/height
-        private const int MapWidth = 200;
-        private const int MapHeight = 60;
+        private const int MapWidth = 100;
+        private const int MapHeight = 200;
 
         public static MapScreen GameScreen;
 
