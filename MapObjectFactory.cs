@@ -77,8 +77,7 @@ namespace AsciiGame
             // Create entity with appropriate attributes
             var player = new RogueLikeEntity('@', false, layer: (int)MyGameMap.Layer.Monsters);
             player.Name = "Player";
-            // Add component for controlling player movement via keyboard.  Other (non-movement) keybindings can be
-            // added as well
+            // Add component for controlling player movement via keyboard.
             var motionControl = new CustomPlayerKeybindingsComponent();
             motionControl.SetMotions(PlayerKeybindingsComponent.ArrowMotions);
             motionControl.SetMotions(PlayerKeybindingsComponent.NumPadAllMotions);
@@ -108,10 +107,9 @@ namespace AsciiGame
             var ParsedColor = ColorExtensions2.FromName(MonsterColor);
             var Transparency = monsters[roll].Value.Transparent;
 
-            var enemy = new Actor(ParsedColor, Character, false, Transparency, layer: (int)MyGameMap.Layer.Monsters, 10);
+            var enemy = new Actor(ParsedColor, Character, false, Transparency, layer: (int)MyGameMap.Layer.Monsters, 100);
             enemy.AllComponents.Add(new ActorStats());
             var stats = enemy.GoRogueComponents.GetFirstOrDefault<ActorStats>();
-            
             enemy.Name = ID;
             stats.Name = Name;
             stats.Character = Character;
@@ -119,9 +117,7 @@ namespace AsciiGame
             stats.ArmorClass = ArmorClass;
             stats.Description = Description;
 
-            
-            // Add AI component to path toward player when in view
-            enemy.AllComponents.Add(new DemoEnemyAI());
+            enemy.AllComponents.Add(new EnemyAI());
             
               
             return enemy;

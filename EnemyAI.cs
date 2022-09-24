@@ -11,16 +11,15 @@ using System.Linq;
 namespace AsciiGame
 {
     /// <summary>
-    /// Simple component that moves its parent toward the player if the player is visible. It demonstrates the basic
-    /// usage of the integration library's component system, as well as basic AStar pathfinding.
+    /// Component for handling the AI of an enemy.
     /// </summary>
-    internal class DemoEnemyAI : RogueLikeComponentBase<RogueLikeEntity>
+    internal class EnemyAI : RogueLikeComponentBase<RogueLikeEntity>
     {
         public Actor currentActor { get; set; }
         public bool actorEstablished = false;
         public Point? playerLastKnownPosition { get; set;}
 
-        public DemoEnemyAI()
+        public EnemyAI()
             : base(false, false, false, false)
         {
             
@@ -34,7 +33,7 @@ namespace AsciiGame
                 currentActor = Parent.CurrentMap.GetEntityAt<Actor>(Parent.Position);
                 actorEstablished = true;
             }
-            currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement); //IDK if I want to keep calculating it's FOV on it's turn, but it's looking like that's how it's gotta be.
+            currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);
             var stats = Parent.GoRogueComponents.GetFirstOrDefault<ActorStats>();
             Path path = GetPath();
             if (path == null) return;
@@ -66,12 +65,13 @@ namespace AsciiGame
             if (!currentActor.FOV.CurrentFOV.Contains(Program.GameScreen.Player.Position))
             {
                 if (playerLastKnownPosition == null) return null;
-                if (playerLastKnownPosition == Parent.Position) return null;
-                Debug.WriteLine($"Pursuing last known position {playerLastKnownPosition}");
+                if (playerLastKnownPosition == Parent.Position) return null; //Stop search if enemy has arrived at last known player position and still doesn't see anything.
+                Debug.WriteLine($"{currentActor.Name} lost sight of target on turn {Info.Turn}! Pursuing last known position {playerLastKnownPosition}!");
                 return Parent.CurrentMap.AStar.ShortestPath(Parent.Position, (Point)playerLastKnownPosition);
             }
             else
             {
+                Debug.WriteLine($"{currentActor.Name} spotted target on turn {Info.Turn}! Pursuing!");
                 playerLastKnownPosition = Program.GameScreen.Player.Position;
                 return Parent.CurrentMap.AStar.ShortestPath(Parent.Position, Program.GameScreen.Player.Position);
             }

@@ -2,6 +2,7 @@
 using SadRogue.Integration;
 using SadRogue.Integration.Keybindings;
 using SadRogue.Primitives;
+using System.Diagnostics;
 
 namespace AsciiGame
 {
@@ -22,9 +23,10 @@ namespace AsciiGame
                 int PlayerDamage = 20;
                 var actor = Parent.CurrentMap.GetEntityAt<Actor>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
                 if (actor == null) return;
+                Debug.WriteLine($"Transparency of tile: {actor.CurrentMap.TransparencyView[Parent.Position]}");
                 if (actor.Layer == 1) //Check target tile is monster
                 {
-                    var ai = actor.GoRogueComponents.GetFirstOrDefault<DemoEnemyAI>();
+                    var ai = actor.GoRogueComponents.GetFirstOrDefault<EnemyAI>();
                     ai.TakeDamage("Player", PlayerDamage);
                     return;
                 }
@@ -39,7 +41,7 @@ namespace AsciiGame
 
             foreach (var entity in Parent.CurrentMap!.Entities.Items)
             {
-                var ai = entity.GoRogueComponents.GetFirstOrDefault<DemoEnemyAI>();
+                var ai = entity.GoRogueComponents.GetFirstOrDefault<EnemyAI>();
                 ai?.TakeTurn();
             }
         }

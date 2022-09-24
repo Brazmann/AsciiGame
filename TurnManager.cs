@@ -8,7 +8,7 @@ namespace AsciiGame
     /// </summary>
     public class TurnDisplayConsole : Console
     {
-        public ulong Turn = 0;
+        public static ulong Turn = 0;
 
         public TurnDisplayConsole(int width, int height)
             : base(width, height)

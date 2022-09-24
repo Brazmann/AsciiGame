@@ -16,7 +16,7 @@ namespace AsciiGame
     internal static class Program
     {
         // Window width/height
-        public const int Width = 160;
+        public const int Width = 80;
         public const int Height = 50;
 
         // Map width/height

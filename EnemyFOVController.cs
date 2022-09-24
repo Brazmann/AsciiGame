@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using GoRogue.Components.ParentAware;
 using GoRogue.FOV;
 using GoRogue.GameFramework;
@@ -46,4 +46,4 @@ namespace AsciiGame
             CalculateFOV();
         }
     }
-}
+}*/
