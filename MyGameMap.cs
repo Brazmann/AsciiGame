@@ -23,6 +23,8 @@ namespace AsciiGame
         // this will affect the FOV shape as well as the distance calculation used for AStar pathfinding on the Map.
         public MyGameMap(int width, int height, DefaultRendererParams? defaultRendererParams)
             : base(width, height, defaultRendererParams, Enum.GetValues<Layer>().Length - 1, Distance.Chebyshev)
-        { }
+        { 
+                 
+        }
     }
 }

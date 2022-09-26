@@ -40,7 +40,7 @@ namespace AsciiGame
 
             // Create actual integration library map.
             var map = new MyGameMap(generator.Context.Width, generator.Context.Height, null);
-
+            
             // Add a component that will implement a character "memory" system, where tiles will be dimmed when they aren't seen by the player,
             // and remain visible exactly as they were when the player last saw them regardless of changes to their actual appearance,
             // until the player sees them again.

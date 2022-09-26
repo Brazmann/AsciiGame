@@ -1,4 +1,5 @@
 ﻿using SadConsole;
+using System.Diagnostics;
 
 namespace AsciiGame
 {
@@ -27,6 +28,8 @@ namespace AsciiGame
 
         private static void Main()
         {
+            ShaiRandom.Serializer.RegisterShaiRandomDefaultTags();
+            Debug.WriteLine($"Seed: {GoRogue.Random.GlobalRandom.DefaultRNG.StringSerialize()}");
             Game.Create(Width, Height);
             Game.Instance.OnStart = Init;
             Game.Instance.Run();

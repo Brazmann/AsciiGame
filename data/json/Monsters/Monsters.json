@@ -21,7 +21,7 @@
     "Name": "Debug God Monster",
     "Character": "D",
     "Color": "Red",
-    "Transparent": false,
+    "Transparent": true,
     "Health": "2",
     "ArmorClass": "800",
     "Description": "What the fuck."

@@ -4,6 +4,7 @@ using GoRogue.Pathing;
 using SadRogue.Integration;
 using SadRogue.Integration.Components;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -13,13 +14,14 @@ namespace AsciiGame
     /// <summary>
     /// Component for handling the AI of an enemy.
     /// </summary>
-    internal class EnemyAI : RogueLikeComponentBase<RogueLikeEntity>
+    internal class ActorAI : RogueLikeComponentBase<RogueLikeEntity>
     {
         public Actor currentActor { get; set; }
         public bool actorEstablished = false;
         public Point? playerLastKnownPosition { get; set;}
+        public IGridView<bool> WalkabilityView { get; set;}
 
-        public EnemyAI()
+        public ActorAI()
             : base(false, false, false, false)
         {
             
@@ -27,6 +29,7 @@ namespace AsciiGame
 
         public void TakeTurn()
         {
+            var bruh = WalkabilityView;
             if (Parent?.CurrentMap == null) return;
             if (actorEstablished == false)
             {
@@ -36,14 +39,21 @@ namespace AsciiGame
             currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);
             var stats = Parent.GoRogueComponents.GetFirstOrDefault<ActorStats>();
             Path path = GetPath();
-            if (path == null) return;
+            
+            if (path == null)
+            {
+                Debug.WriteLine("Path is null!");
+                return;
+            }
 
                 var firstPoint = path.GetStep(0);
-                if (Parent.CanMove(firstPoint))
+                var actor = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(firstPoint);
+            if (actor == null)
                 {
                     //Program.GameScreen.MessageLog.AddMessage($"A {stats.Name} moves {Direction.GetDirection(Parent.Position, firstPoint)}!");
                     Parent.Position = firstPoint;
-                }
+                currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);
+            }
         }
 
         public void TakeDamage(string attackerName, int amount)
@@ -62,11 +72,12 @@ namespace AsciiGame
 
         public Path GetPath()
         {
-            if (!currentActor.FOV.CurrentFOV.Contains(Program.GameScreen.Player.Position))
+            if (!currentActor.FOV.BooleanResultView[Program.GameScreen.Player.Position])
             {
                 if (playerLastKnownPosition == null) return null;
                 if (playerLastKnownPosition == Parent.Position) return null; //Stop search if enemy has arrived at last known player position and still doesn't see anything.
                 Debug.WriteLine($"{currentActor.Name} lost sight of target on turn {Info.Turn}! Pursuing last known position {playerLastKnownPosition}!");
+                
                 return Parent.CurrentMap.AStar.ShortestPath(Parent.Position, (Point)playerLastKnownPosition);
             }
             else
@@ -77,4 +88,13 @@ namespace AsciiGame
             }
         }
     }
+    internal class AIstar : AStar
+    {
+        public AIstar(IGridView<bool> WalkabilityView, Distance DistanceMeasurement)
+    : base(WalkabilityView, DistanceMeasurement)
+        {
+
+        }
+    }
+
 }

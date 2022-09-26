@@ -18,15 +18,15 @@ namespace AsciiGame
     {
         protected override void MotionHandler(Direction direction)
         {
-            if (!Parent!.CanMoveIn(direction))
+            var actor = Parent.CurrentMap.GetEntityAt<Actor>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
+            
+            if (actor != null)
             {
                 int PlayerDamage = 20;
-                var actor = Parent.CurrentMap.GetEntityAt<Actor>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
-                if (actor == null) return;
-                Debug.WriteLine($"Transparency of tile: {actor.CurrentMap.TransparencyView[Parent.Position]}");
+                //Debug.WriteLine($"Transparency of tile: {actor.CurrentMap.TransparencyView[Parent.Position]}");
                 if (actor.Layer == 1) //Check target tile is monster
                 {
-                    var ai = actor.GoRogueComponents.GetFirstOrDefault<EnemyAI>();
+                    var ai = actor.GoRogueComponents.GetFirstOrDefault<ActorAI>();
                     ai.TakeDamage("Player", PlayerDamage);
                     return;
                 }
@@ -34,6 +34,8 @@ namespace AsciiGame
                 {
                     return;
                 }
+            } else if (!Parent!.CanMoveIn(direction)){
+                return;
             }
             PrintNearbyEntities();
             Program.GameScreen.GameInfo.IncrementTurn();
@@ -41,7 +43,7 @@ namespace AsciiGame
 
             foreach (var entity in Parent.CurrentMap!.Entities.Items)
             {
-                var ai = entity.GoRogueComponents.GetFirstOrDefault<EnemyAI>();
+                var ai = entity.GoRogueComponents.GetFirstOrDefault<ActorAI>();
                 ai?.TakeTurn();
             }
         }
