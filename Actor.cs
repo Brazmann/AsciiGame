@@ -4,7 +4,7 @@ using SadRogue.Integration;
 using SadRogue.Primitives;
 using System.Diagnostics;
 
-class Actor : RogueLikeEntity
+public class Actor : RogueLikeEntity
 {
     public IFOV FOV { get; set; }
     public int FOVRadius { get; }

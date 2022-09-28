@@ -3,7 +3,7 @@
     "Name": "Goblin",
     "Character": "g",
     "Color": "AnsiGreen",
-    "Transparent" : true,
+    "Transparent": true,
     "Health": "100",
     "ArmorClass": "10",
     "Description": "It's little, and green, and ferocious.'"
@@ -16,6 +16,15 @@
     "Health": "80",
     "ArmorClass": "8",
     "Description": "What once drew breath now draws blood. It seems eager to tear the life from you."
+  },
+  "DBG_JSON": {
+    "Name": "Jason",
+    "Character": "J",
+    "Color": "Pink",
+    "Transparent": true,
+    "Health": "69",
+    "ArmorClass": "69",
+    "Description": "The Jason."
   },
   "DBG_DEBUGGODMONSTER": {
     "Name": "Debug God Monster",

@@ -18,6 +18,7 @@ namespace AsciiGame
     {
         protected override void MotionHandler(Direction direction)
         {
+            
             var actor = Parent.CurrentMap.GetEntityAt<Actor>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
             
             if (actor != null)

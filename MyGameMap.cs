@@ -16,6 +16,7 @@ namespace AsciiGame
         {
             Terrain = 0,
             Monsters,
+            TerrainInteractable,
             Items
         }
 

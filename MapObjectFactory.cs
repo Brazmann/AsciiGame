@@ -107,7 +107,7 @@ namespace AsciiGame
             var ParsedColor = ColorExtensions2.FromName(MonsterColor);
             var Transparency = monsters[roll].Value.Transparent;
 
-            var enemy = new Actor(ParsedColor, Character, true, Transparency, layer: (int)MyGameMap.Layer.Monsters, 100);
+            var enemy = new Actor(ParsedColor, Character, false, Transparency, layer: (int)MyGameMap.Layer.Monsters, 4);
             enemy.AllComponents.Add(new ActorStats());
             var stats = enemy.GoRogueComponents.GetFirstOrDefault<ActorStats>();
             enemy.Name = ID;
