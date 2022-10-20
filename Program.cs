@@ -17,23 +17,27 @@ namespace AsciiGame
     internal static class Program
     {
         // Window width/height
-        public const int Width = 80;
-        public const int Height = 50;
+        public const int Width = 128;
+        public const int Height = 64;
 
         // Map width/height
-        private const int MapWidth = 80;
-        private const int MapHeight = 80;
+        private const int MapWidth = 256;
+        private const int MapHeight = 128;
 
         public static MapScreen GameScreen;
+
+        public static ulong Seed = 1;
 
         private static void Main()
         {
             ShaiRandom.Serializer.RegisterShaiRandomDefaultTags();
+            GoRogue.Random.GlobalRandom.DefaultRNG.Seed(1);
             Debug.WriteLine($"Seed: {GoRogue.Random.GlobalRandom.DefaultRNG.StringSerialize()}");
-            Game.Create(Width, Height);
+            Game.Create(Width, Height, "./fonts/C64.font");
             Game.Instance.OnStart = Init;
             Game.Instance.Run();
             Game.Instance.Dispose();
+            
         }
 
         private static void Init()

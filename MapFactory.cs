@@ -54,7 +54,7 @@ namespace AsciiGame
             // system.
             map.ApplyTerrainOverlay(generatedMap, (pos, val) => val ? MapObjectFactory.Grass(pos) : MapObjectFactory.Wall(pos));
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var enemy = MapObjectFactory.Enemy();
                 enemy.Position = GlobalRandom.DefaultRNG.RandomPosition(map.WalkabilityView, true);

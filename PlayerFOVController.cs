@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Text;
 using GoRogue.Components.ParentAware;
 using GoRogue.GameFramework;
 using SadRogue.Integration;
 using SadRogue.Integration.Components;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace AsciiGame
 {
@@ -17,7 +20,7 @@ namespace AsciiGame
         /// <summary>
         /// The sight radius of the player.
         /// </summary>
-        public int FOVRadius { get; init; } = 40;
+        public int FOVRadius { get; init; } = 20;
 
         public PlayerFOVController()
             : base(false, false, false, false)
@@ -42,6 +45,41 @@ namespace AsciiGame
         private void OnMoved(object sender, GameObjectPropertyChanged<Point> e)
         {
             CalculateFOV();
+            if(Parent.CurrentMap == null) return;
+            StringBuilder sb = new StringBuilder("");
+            var positions = Parent.CurrentMap.PlayerFOV.CurrentFOV;
+            int CheckedTiles = 0;
+            foreach (var position in positions)
+            {
+                var Actor = Parent.CurrentMap.GetEntityAt<Actor>(position);
+                CheckedTiles++;
+                if (Actor == null)
+                {
+                    if(CheckedTiles % 5 == 0)
+                    {
+                        sb.Append("null\n");
+                        
+                    } else
+                    {
+                        sb.Append("null");
+                        
+                    }
+                }
+                else
+                {
+                    if(CheckedTiles % 5 == 0)
+                    {
+                        sb.Append($"{Actor.Name}\n");
+                        
+                    }
+                    else
+                    {
+                        sb.Append($"{Actor.Name}");
+                        
+                    }
+                }
+            };
+            Debug.WriteLine(sb.ToString());
         }
     }
 }

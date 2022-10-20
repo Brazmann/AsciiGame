@@ -43,6 +43,10 @@ namespace AsciiGame
             Info.Turn++;
             UpdateGameInfoDisplay();
         }
+        public ulong GetTurn()
+        {
+            return Info.Turn;
+        }
     }
 
     public class Info

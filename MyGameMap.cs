@@ -15,9 +15,10 @@ namespace AsciiGame
         public enum Layer
         {
             Terrain = 0,
+            Items,
             Monsters,
             TerrainInteractable,
-            Items
+            
         }
 
         // CUSTOMIZATION: Change the distance from Distance.Chebyshev to whatever is desired for your game.  By default,

@@ -3,6 +3,7 @@ using SadConsole;
 using SadRogue.Integration;
 using SadRogue.Primitives;
 using ShaiRandom.Generators;
+using System.Diagnostics;
 
 namespace AsciiGame
 {
@@ -37,7 +38,7 @@ namespace AsciiGame
             // and you must add any non-default renderers to the SadConsole screen object hierarchy, IN ADDITION
             // to the map itself.
             Map.DefaultRenderer = Map.CreateRenderer((Program.Width, Program.Height - MessageLogHeight));
-
+            //Map.DefaultRenderer.Font = SadConsole.Game.Instance.LoadFont("./fonts/C64.font");
             // Make the Map (which is also a screen object) a child of this screen.  You MUST have the map as a child
             // of the active screen, even if you are using entirely custom renderers.
             Map.Parent = this;
@@ -82,7 +83,7 @@ namespace AsciiGame
             Border.Surface.DrawLine(new Point(60, 5), new Point(66, 20), '$', Color.AnsiBlue, Color.AnsiBlueBright, Mirror.None);
             Border.UseMouse = false;
 
-            BorderConsole.Children.Add(Border);
+            //BorderConsole.Children.Add(Border);
         }
     }
 }

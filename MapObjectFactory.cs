@@ -93,8 +93,9 @@ namespace AsciiGame
         {
 
             var monsters = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(monsterJson).ToList(); 
-            var rnd = new Random();
-            var roll = rnd.Next(0, monsters.Count);
+            //var rnd = new Random();
+            
+            var roll = GoRogue.Random.GlobalRandom.DefaultRNG.NextInt(0, monsters.Count); //rnd.Next(0, monsters.Count);
 
             var ID = monsters[roll].Key;
             var Name = monsters[roll].Value.Name;
@@ -117,7 +118,7 @@ namespace AsciiGame
 
             stats.ArmorClass = ArmorClass;
             stats.Description = Description;
-
+            
             enemy.AllComponents.Add(new ActorAI());
             
               

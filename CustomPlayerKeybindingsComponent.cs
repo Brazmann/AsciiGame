@@ -16,19 +16,22 @@ namespace AsciiGame
     /// </remarks>
     internal class CustomPlayerKeybindingsComponent : PlayerKeybindingsComponent
     {
+        
         protected override void MotionHandler(Direction direction)
         {
             
             var actor = Parent.CurrentMap.GetEntityAt<Actor>(new Point(Parent.Position.X + direction.DeltaX, Parent.Position.Y + direction.DeltaY));
-            
+
             if (actor != null)
             {
-                int PlayerDamage = 20;
+                int PlayerDamage = 2000;
                 //Debug.WriteLine($"Transparency of tile: {actor.CurrentMap.TransparencyView[Parent.Position]}");
-                if (actor.Layer == 1) //Check target tile is monster
+                if (actor.Layer == (int)MyGameMap.Layer.Monsters) //Check target tile is monster
                 {
                     var ai = actor.GoRogueComponents.GetFirstOrDefault<ActorAI>();
                     ai.TakeDamage("Player", PlayerDamage);
+                    Program.GameScreen.GameInfo.IncrementTurn();
+                    TakeAllTurns();
                     return;
                 }
                 else
@@ -42,17 +45,22 @@ namespace AsciiGame
             Program.GameScreen.GameInfo.IncrementTurn();
             Parent.Position += direction;
 
-            foreach (var entity in Parent.CurrentMap!.Entities.Items)
-            {
-                var ai = entity.GoRogueComponents.GetFirstOrDefault<ActorAI>();
-                ai?.TakeTurn();
-            }
+            TakeAllTurns();
         }
         public void PrintNearbyEntities()
         {
             Actor checkEntity = Parent.CurrentMap.GetEntityAt<Actor>(Parent.Position.X + 1, Parent.Position.Y);
             if (checkEntity == null) return;
             //Program.GameScreen.MessageLog.AddMessage(checkEntity.Name);
+        }
+
+        public void TakeAllTurns()
+        {
+            foreach (var entity in Parent.CurrentMap!.Entities.Items)
+            {
+                var ai = entity.GoRogueComponents.GetFirstOrDefault<ActorAI>();
+                ai?.TakeTurn();
+            }
         }
     }
 }
