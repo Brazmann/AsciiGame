@@ -26,6 +26,7 @@ public class Actor : RogueLikeEntity
     private void OnRemovedFromMap(object? s, GameObjectCurrentMapChanged e)
     {
         FOV = null;
+        
     }
 
     private void OnMoved(object? s, GameObjectPropertyChanged<Point> e)

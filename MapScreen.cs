@@ -1,5 +1,6 @@
 ﻿using GoRogue.Random;
 using SadConsole;
+using SadConsole.Input;
 using SadRogue.Integration;
 using SadRogue.Primitives;
 using ShaiRandom.Generators;
@@ -16,6 +17,7 @@ namespace AsciiGame
         public readonly MessageLogConsole MessageLog;
         public readonly GameInfoConsole GameInfo;
         public readonly Console BorderConsole;
+        public readonly PopUpConsole PopUp;
        // public readonly Console TurnDisplay;
 
         public readonly ScreenSurface Border;
@@ -60,6 +62,13 @@ namespace AsciiGame
             MessageLog = new MessageLogConsole(Program.Width / 2, MessageLogHeight);
             MessageLog.Parent = this;
             MessageLog.Position = new(0, Program.Height - MessageLogHeight);
+
+            // Create menu pop up
+            PopUp = new PopUpConsole(Program.Width / 2, MessageLogHeight);
+            PopUp.Parent = this;
+            PopUp.Position = new(0, MessageLogHeight + 20);
+            PopUp.DefaultBackground = Color.AnsiBlue;
+            PopUp.IsVisible = false;
 
             // Create turn display
             /*TurnDisplay = new TurnDisplayConsole(Program.Width / 2, MessageLogHeight);

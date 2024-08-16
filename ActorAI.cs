@@ -19,7 +19,6 @@ namespace AsciiGame
         public bool actorEstablished = false;
         public Point? TargetLastKnownPosition { get; set; }
         public IGridView<bool> WalkabilityView { get; set; }
-        public bool PlayerSpotted { get; set; }
         public AStar AStarTerrain { get; set; }
         public bool ActionInProgress { get; set; }
         public Dictionary<ulong, Point> MoveQueue; //Key is turn to activate, value is action to take.
@@ -41,7 +40,7 @@ namespace AsciiGame
 
         public void TakeTurn()
         {
-            if (actorEstablished == false)
+            if (!actorEstablished)
             {
                 currentActor = Parent.CurrentMap.GetEntityAt<Actor>(Parent.Position);
                 actorEstablished = true;
@@ -49,11 +48,6 @@ namespace AsciiGame
             currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);
             Target = Program.GameScreen.Player;
             var bruh = currentActor.FOV.BooleanResultView.Positions();
-
-            foreach (var ass in bruh)
-            {
-
-            }
     
             CanSeeTarget = currentActor.FOV.BooleanResultView[Target.Position];
             if (AStarTerrain == null)
@@ -80,7 +74,6 @@ namespace AsciiGame
             }
             else
             {
-
                 if (Parent?.CurrentMap == null) return;
                 MoveToPlayer();
                 currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);
@@ -108,7 +101,6 @@ namespace AsciiGame
                 return;
             }
             Program.GameScreen.MessageLog.AddMessage($"{attackerName} attacks {stats.Name} for {amount} damage!");
-            var bruh = GetPath;
         }
 
         public void Explode()
@@ -147,6 +139,7 @@ namespace AsciiGame
 
                     gib.Appearance.Background = Color.DarkRed;
                     gib.Position = position;
+                    
                     Parent.CurrentMap.AddEntity(gib);
                 }
             }
@@ -190,7 +183,6 @@ namespace AsciiGame
 
         public void MoveToPlayer()
         {
-            var bruh = WalkabilityView;
             currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);
            
             Point Target;
@@ -218,7 +210,11 @@ namespace AsciiGame
                 path = NewPath;
             }
             var CurrentTurn = Program.GameScreen.GameInfo.GetTurn();
-            var firstPoint = path.GetStep(0);
+            if (path.GetStep(0) == null)
+            {
+                return;
+            }
+             var firstPoint = path.GetStep(0);
             var actor = Parent.CurrentMap.GetEntityAt<RogueLikeEntity>(firstPoint);
             if (actor == null)
             {
@@ -229,6 +225,10 @@ namespace AsciiGame
             }
             else
             {
+                if(actor.Layer == (int)MyGameMap.Layer.Items)
+                {
+                    MoveAction(firstPoint);
+                }
                 //var point = GetNearestVacantPoint();
                 //Parent.Position = point;
                 currentActor.FOV.Calculate(Parent.Position, currentActor.FOVRadius, Parent.CurrentMap.DistanceMeasurement);

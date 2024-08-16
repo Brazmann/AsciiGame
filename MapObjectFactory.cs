@@ -103,6 +103,7 @@ namespace AsciiGame
             var MonsterColor = monsters[roll].Value.Color;
             var Health = monsters[roll].Value.Health;
             var ArmorClass = monsters[roll].Value.ArmorClass;
+            var Category = monsters[roll].Value.Category;
             var Description = monsters[roll].Value.Description;
 
             var ParsedColor = ColorExtensions2.FromName(MonsterColor);
@@ -117,6 +118,7 @@ namespace AsciiGame
             stats.Health = Health;
 
             stats.ArmorClass = ArmorClass;
+            stats.Category = Category;
             stats.Description = Description;
             
             enemy.AllComponents.Add(new ActorAI());
@@ -134,6 +136,7 @@ namespace AsciiGame
         public bool Transparent { get; set;}
         public int Health { get; set; }
         public int ArmorClass { get; set; }
+        public string Category { get; set; }
         public string Description { get; set; }
     }
     public class Monsters

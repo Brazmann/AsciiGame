@@ -45,7 +45,7 @@ namespace AsciiGame
         private void OnMoved(object sender, GameObjectPropertyChanged<Point> e)
         {
             CalculateFOV();
-            if(Parent.CurrentMap == null) return;
+            /*if(Parent.CurrentMap == null) return;
             StringBuilder sb = new StringBuilder("");
             var positions = Parent.CurrentMap.PlayerFOV.CurrentFOV;
             int CheckedTiles = 0;
@@ -79,7 +79,7 @@ namespace AsciiGame
                     }
                 }
             };
-            Debug.WriteLine(sb.ToString());
+            Debug.WriteLine(sb.ToString());*/
         }
     }
 }

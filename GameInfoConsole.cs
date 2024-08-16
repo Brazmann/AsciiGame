@@ -1,5 +1,7 @@
 ﻿using SadConsole;
+using SadConsole.Input;
 using SadRogue.Primitives;
+using System.Diagnostics;
 
 namespace AsciiGame
 {
@@ -46,6 +48,18 @@ namespace AsciiGame
         public ulong GetTurn()
         {
             return Info.Turn;
+        }
+        public override bool ProcessKeyboard(Keyboard keyboard)
+        {
+            if(keyboard.KeysDown.Count > 0)
+            {
+                //Debug.WriteLine($"{keyboard.KeysDown[0].Key}");
+                Cursor.Position = new Point(0, 0);
+                Cursor.Print($"Turn: {Info.Turn} {keyboard.KeysDown[0].Key}______________________________________");
+            }
+
+            
+            return base.ProcessKeyboard(keyboard);
         }
     }
 

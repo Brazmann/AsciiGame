@@ -16,6 +16,7 @@ namespace AsciiGame
         public char Character { get; set; }
         public int Health { get; set; }
         public int ArmorClass { get; set; }
+        public string Category { get; set; }
         public string Description { get; set; }
         public ActorStats()
             : base(false, false, false, false)

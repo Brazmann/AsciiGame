@@ -1,29 +1,32 @@
 {
-  "MON_GOBLIN": {
-    "Name": "Goblin",
-    "Character": "g",
-    "Color": "AnsiGreen",
+  "PRED_WOLF": {
+    "Name": "Wolf",
+    "Character": "w",
+    "Color": "Gray",
     "Transparent": true,
     "Health": "100",
     "ArmorClass": "10",
-    "Description": "It's little, and green, and ferocious.'"
+    "Category": "PREDATOR",
+    "Description": "Man's best friend.'"
   },
-  "MON_ZOMBIE": {
-    "Name": "Zombie",
+  "PREY_CHICKEN": {
+    "Name": "Chicken",
     "Character": "Z",
     "Color": "Green",
     "Transparent": true,
     "Health": "80",
     "ArmorClass": "8",
+    "Category": "PREY",
     "Description": "What once drew breath now draws blood. It seems eager to tear the life from you."
   },
-  "DBG_JSON": {
+  "PREY_JSON": {
     "Name": "Jason",
     "Character": "J",
     "Color": "Pink",
     "Transparent": true,
     "Health": "69",
     "ArmorClass": "69",
+    "Categroy": "PREY",
     "Description": "The Jason."
   },
   "DBG_DEBUGGODMONSTER": {
@@ -33,6 +36,7 @@
     "Transparent": true,
     "Health": "2",
     "ArmorClass": "800",
-    "Description": "What the fuck."
+    "Category": "PREY",
+    "Description": "D."
   }
 }

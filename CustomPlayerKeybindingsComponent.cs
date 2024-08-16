@@ -43,8 +43,11 @@ namespace AsciiGame
             }
             PrintNearbyEntities();
             Program.GameScreen.GameInfo.IncrementTurn();
-            Parent.Position += direction;
+            var bruh = true;
 
+            Parent.Position += direction;
+            //Parent.Position += direction;
+            //Parent.Position += direction;
             TakeAllTurns();
         }
         public void PrintNearbyEntities()
@@ -62,5 +65,6 @@ namespace AsciiGame
                 ai?.TakeTurn();
             }
         }
+
     }
 }

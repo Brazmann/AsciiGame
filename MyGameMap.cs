@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using SadConsole.Input;
 using SadRogue.Integration.Maps;
 using SadRogue.Primitives;
 
@@ -27,6 +29,20 @@ namespace AsciiGame
             : base(width, height, defaultRendererParams, Enum.GetValues<Layer>().Length - 1, Distance.Chebyshev)
         { 
                  
+        }
+
+        public override bool ProcessKeyboard(Keyboard keyboard)
+        {
+            if (keyboard.HasKeysPressed == true)
+            {
+                switch (keyboard.KeysPressed[0].Key.ToString())
+                {
+                    case "A":
+                        Parent.ToString();
+                        break;
+                }
+            }
+            return base.ProcessKeyboard(keyboard);
         }
     }
 }
